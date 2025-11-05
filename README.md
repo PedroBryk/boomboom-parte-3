@@ -10,59 +10,10 @@ Foram implementadas três principais estruturas arquiteturais:
 
 Cada padrão foi aplicado para resolver um problema específico de design, mantendo o código modular, reutilizável, testável e de fácil manutenção.
 
-🧱 Estrutura Geral do Projeto
-app/
-├── CQRS/
-│   ├── Commands/
-│   ├── Queries/
-│   └── Handlers/
-│
-├── Http/
-│   └── Controllers/
-│       ├── AlunoController.php
-│       ├── ProfessorController.php
-│       └── TreinoController.php
-│
-├── Interfaces/
-│   ├── ProfessorServiceInterface.php
-│   └── AlunoStrategyInterface.php
-│
-├── Models/
-│   ├── Aluno.php
-│   ├── Professor.php
-│   └── Treino.php
-│
-├── Services/
-│   ├── Professor/
-│   │   ├── ProfessorFactory.php
-│   │   ├── ProfessorService.php
-│   │   ├── ProfessorValidator.php
-│   │   └── ...
-│   └── Aluno/
-│       ├── AlunoService.php
-│       ├── AlunoNormalStrategy.php
-│       ├── AlunoVipStrategy.php
-│       └── AlunoStrategyInterface.php
-│
-└── Tests/
-    └── Unit/
-        ├── ProfessorServiceTest.php
-        ├── AlunoServiceTest.php
-        └── TreinoCQRSHandlersTest.php
-
 🏭 Módulo Professor — Factory Method
 🧠 Padrão Utilizado
 
 O padrão Factory Method foi utilizado para centralizar a criação de serviços de professor, desacoplando a lógica de validação e persistência do controller.
-
-📂 Estrutura
-app/
-└── Services/
-    └── Professor/
-        ├── ProfessorFactory.php
-        ├── ProfessorService.php
-        ├── ProfessorValidator.php
-        └── ...
 
 🧩 Funcionamento
 
@@ -90,15 +41,6 @@ O Strategy Pattern foi aplicado para permitir que alunos tenham comportamentos d
 AlunoNormalStrategy → comportamento padrão.
 
 AlunoVipStrategy → adiciona uma saudação especial.
-
-📂 Estrutura
-app/
-└── Services/
-    └── Aluno/
-        ├── AlunoStrategyInterface.php
-        ├── AlunoNormalStrategy.php
-        ├── AlunoVipStrategy.php
-        ├── AlunoService.php
 
 ⚙️ Funcionamento
 
@@ -128,23 +70,6 @@ Garante separação clara de responsabilidades (SRP – Single Responsibility Pr
 🧩 Padrão Utilizado
 
 O CQRS (Command Query Responsibility Segregation) foi aplicado para separar operações de escrita e leitura no CRUD de treinos.
-
-📂 Estrutura
-app/
-└── CQRS/
-    ├── Commands/
-    │   ├── CreateTreinoCommand.php
-    │   ├── UpdateTreinoCommand.php
-    │   └── DeleteTreinoCommand.php
-    ├── Queries/
-    │   ├── GetAllTreinosQuery.php
-    │   └── GetTreinoByIdQuery.php
-    └── Handlers/
-        ├── CreateTreinoHandler.php
-        ├── UpdateTreinoHandler.php
-        ├── DeleteTreinoHandler.php
-        ├── GetAllTreinosHandler.php
-        └── GetTreinoByIdHandler.php
 
 ⚙️ Funcionamento
 
@@ -176,18 +101,6 @@ Open/Closed (OCP)	Strategy e CQRS	É possível adicionar novas estratégias e ha
 Dependency Inversion (DIP)	Factory Method	Controladores dependem de abstrações (interfaces)
 Interface Segregation (ISP)	Services	Interfaces pequenas e específicas para cada caso
 Liskov Substitution (LSP)	Strategy	Estratégias podem ser trocadas sem quebrar o código
-🧪 Testes Unitários
-Estrutura
-tests/Unit/
-├── ProfessorServiceTest.php
-├── AlunoServiceTest.php
-└── TreinoCQRSHandlersTest.php
-
-Objetivo
-
-Garantir que cada serviço, handler e strategy funcione de forma isolada.
-
-Testar as regras de negócio sem necessidade de acessar o controller.
 
 🚀 Conclusão
 
