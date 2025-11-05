@@ -91,16 +91,6 @@ Facilita escalar o sistema e aplicar caching em consultas.
 
 Permite testes unitários isolados dos handlers.
 
-🧩 Padrões de Projeto e Princípios Aplicados
-Princípio / Padrão	Onde foi aplicado	Benefício
-Factory Method	Módulo Professor	Criação controlada de serviços com injeção de dependências
-Strategy	Módulo Aluno	Permite múltiplos comportamentos de criação de aluno
-CQRS	Módulo Treino	Separa escrita e leitura para melhor organização e escalabilidade
-Single Responsibility (SRP)	Todos os módulos	Cada classe tem apenas uma responsabilidade
-Open/Closed (OCP)	Strategy e CQRS	É possível adicionar novas estratégias e handlers sem modificar o código existente
-Dependency Inversion (DIP)	Factory Method	Controladores dependem de abstrações (interfaces)
-Interface Segregation (ISP)	Services	Interfaces pequenas e específicas para cada caso
-Liskov Substitution (LSP)	Strategy	Estratégias podem ser trocadas sem quebrar o código
 
 🚀 Conclusão
 
