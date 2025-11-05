@@ -1,66 +1,204 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+Este projeto foi desenvolvido com o objetivo de aplicar padrões de projeto (Design Patterns) e boas práticas de arquitetura de software em um sistema Laravel, respeitando os princípios SOLID e Clean Architecture.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Foram implementadas três principais estruturas arquiteturais:
 
-## About Laravel
+🏭 Factory Method → no módulo de Professores
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+🧠 Strategy Pattern → no módulo de Alunos
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+⚙️ CQRS (Command Query Responsibility Segregation) → no módulo de Treinos
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Cada padrão foi aplicado para resolver um problema específico de design, mantendo o código modular, reutilizável, testável e de fácil manutenção.
 
-## Learning Laravel
+🧱 Estrutura Geral do Projeto
+app/
+├── CQRS/
+│   ├── Commands/
+│   ├── Queries/
+│   └── Handlers/
+│
+├── Http/
+│   └── Controllers/
+│       ├── AlunoController.php
+│       ├── ProfessorController.php
+│       └── TreinoController.php
+│
+├── Interfaces/
+│   ├── ProfessorServiceInterface.php
+│   └── AlunoStrategyInterface.php
+│
+├── Models/
+│   ├── Aluno.php
+│   ├── Professor.php
+│   └── Treino.php
+│
+├── Services/
+│   ├── Professor/
+│   │   ├── ProfessorFactory.php
+│   │   ├── ProfessorService.php
+│   │   ├── ProfessorValidator.php
+│   │   └── ...
+│   └── Aluno/
+│       ├── AlunoService.php
+│       ├── AlunoNormalStrategy.php
+│       ├── AlunoVipStrategy.php
+│       └── AlunoStrategyInterface.php
+│
+└── Tests/
+    └── Unit/
+        ├── ProfessorServiceTest.php
+        ├── AlunoServiceTest.php
+        └── TreinoCQRSHandlersTest.php
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+🏭 Módulo Professor — Factory Method
+🧠 Padrão Utilizado
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+O padrão Factory Method foi utilizado para centralizar a criação de serviços de professor, desacoplando a lógica de validação e persistência do controller.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+📂 Estrutura
+app/
+└── Services/
+    └── Professor/
+        ├── ProfessorFactory.php
+        ├── ProfessorService.php
+        ├── ProfessorValidator.php
+        └── ...
 
-## Laravel Sponsors
+🧩 Funcionamento
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+ProfessorFactory cria a instância de ProfessorService injetando dependências como o ProfessorValidator.
 
-### Premium Partners
+ProfessorService contém as regras de negócio (criação, atualização, exclusão).
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+ProfessorValidator cuida das validações.
 
-## Contributing
+O ProfessorController apenas orquestra as chamadas, sem conter lógica de negócio.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+✅ Benefícios
 
-## Code of Conduct
+Desacoplamento total entre controller e lógica de negócio.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Aplicação do Princípio da Inversão de Dependência (SOLID).
 
-## Security Vulnerabilities
+Testabilidade e manutenção facilitadas.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+🧠 Módulo Aluno — Strategy Pattern
+🧩 Padrão Utilizado
 
-## License
+O Strategy Pattern foi aplicado para permitir que alunos tenham comportamentos diferentes no momento do cadastro, dependendo do tipo de cliente.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+AlunoNormalStrategy → comportamento padrão.
+
+AlunoVipStrategy → adiciona uma saudação especial.
+
+📂 Estrutura
+app/
+└── Services/
+    └── Aluno/
+        ├── AlunoStrategyInterface.php
+        ├── AlunoNormalStrategy.php
+        ├── AlunoVipStrategy.php
+        ├── AlunoService.php
+
+⚙️ Funcionamento
+
+O AlunoController recebe os dados da requisição.
+
+O AlunoService escolhe a estratégia apropriada com base no tipo_cliente.
+
+A estratégia selecionada é executada (normal ou VIP).
+
+Se o aluno for VIP, é adicionada uma mensagem personalizada em saudacao_vip.
+
+💡 Exemplo
+$alunoService = new AlunoService();
+
+$aluno = $alunoService->criarAluno($dados, 'vip');
+// Resultado: aluno cadastrado com campo 'saudacao_vip' preenchido
+
+✅ Benefícios
+
+Facilita a extensão de novos tipos de aluno sem alterar código existente (OCP – Open/Closed Principle).
+
+Evita condicionais extensas no código.
+
+Garante separação clara de responsabilidades (SRP – Single Responsibility Principle).
+
+⚙️ Módulo Treino — CQRS
+🧩 Padrão Utilizado
+
+O CQRS (Command Query Responsibility Segregation) foi aplicado para separar operações de escrita e leitura no CRUD de treinos.
+
+📂 Estrutura
+app/
+└── CQRS/
+    ├── Commands/
+    │   ├── CreateTreinoCommand.php
+    │   ├── UpdateTreinoCommand.php
+    │   └── DeleteTreinoCommand.php
+    ├── Queries/
+    │   ├── GetAllTreinosQuery.php
+    │   └── GetTreinoByIdQuery.php
+    └── Handlers/
+        ├── CreateTreinoHandler.php
+        ├── UpdateTreinoHandler.php
+        ├── DeleteTreinoHandler.php
+        ├── GetAllTreinosHandler.php
+        └── GetTreinoByIdHandler.php
+
+⚙️ Funcionamento
+
+Commands → alteram o estado do sistema (create, update, delete).
+
+Queries → apenas leem dados (getAll, getById).
+
+Handlers → executam a lógica de cada operação.
+
+O Controller apenas instancia o comando/consulta e chama o handler correspondente.
+
+✅ Benefícios
+
+Código extremamente limpo e organizado.
+
+Separação entre leitura e escrita (evita efeitos colaterais).
+
+Facilita escalar o sistema e aplicar caching em consultas.
+
+Permite testes unitários isolados dos handlers.
+
+🧩 Padrões de Projeto e Princípios Aplicados
+Princípio / Padrão	Onde foi aplicado	Benefício
+Factory Method	Módulo Professor	Criação controlada de serviços com injeção de dependências
+Strategy	Módulo Aluno	Permite múltiplos comportamentos de criação de aluno
+CQRS	Módulo Treino	Separa escrita e leitura para melhor organização e escalabilidade
+Single Responsibility (SRP)	Todos os módulos	Cada classe tem apenas uma responsabilidade
+Open/Closed (OCP)	Strategy e CQRS	É possível adicionar novas estratégias e handlers sem modificar o código existente
+Dependency Inversion (DIP)	Factory Method	Controladores dependem de abstrações (interfaces)
+Interface Segregation (ISP)	Services	Interfaces pequenas e específicas para cada caso
+Liskov Substitution (LSP)	Strategy	Estratégias podem ser trocadas sem quebrar o código
+🧪 Testes Unitários
+Estrutura
+tests/Unit/
+├── ProfessorServiceTest.php
+├── AlunoServiceTest.php
+└── TreinoCQRSHandlersTest.php
+
+Objetivo
+
+Garantir que cada serviço, handler e strategy funcione de forma isolada.
+
+Testar as regras de negócio sem necessidade de acessar o controller.
+
+🚀 Conclusão
+
+Este projeto demonstra como é possível organizar um sistema Laravel com arquitetura limpa e escalável, aplicando padrões de projeto clássicos e os princípios SOLID de forma prática.
+
+Essas abordagens tornam o código:
+
+🔹 Mais fácil de manter
+
+🔹 Mais testável
+
+🔹 Mais reutilizável
+
+🔹 E preparado para crescer com o tempo
