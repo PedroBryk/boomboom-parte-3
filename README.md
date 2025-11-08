@@ -11,7 +11,6 @@ Foram implementadas três principais estruturas arquiteturais:
 Cada padrão foi aplicado para resolver um problema específico de design, mantendo o código modular, reutilizável, testável e de fácil manutenção.
 
 🏭 Módulo Professor — Factory Method
-🧠 Padrão Utilizado
 
 O padrão Factory Method foi utilizado para centralizar a criação de serviços de professor, desacoplando a lógica de validação e persistência do controller.
 
@@ -34,7 +33,6 @@ Aplicação do Princípio da Inversão de Dependência (SOLID).
 Testabilidade e manutenção facilitadas.
 
 🧠 Módulo Aluno — Strategy Pattern
-🧩 Padrão Utilizado
 
 O Strategy Pattern foi aplicado para permitir que alunos tenham comportamentos diferentes no momento do cadastro, dependendo do tipo de cliente.
 
@@ -67,7 +65,6 @@ Evita condicionais extensas no código.
 Garante separação clara de responsabilidades (SRP – Single Responsibility Principle).
 
 ⚙️ Módulo Treino — CQRS
-🧩 Padrão Utilizado
 
 O CQRS (Command Query Responsibility Segregation) foi aplicado para separar operações de escrita e leitura no CRUD de treinos.
 
@@ -91,17 +88,3 @@ Facilita escalar o sistema e aplicar caching em consultas.
 
 Permite testes unitários isolados dos handlers.
 
-
-🚀 Conclusão
-
-Este projeto demonstra como é possível organizar um sistema Laravel com arquitetura limpa e escalável, aplicando padrões de projeto clássicos e os princípios SOLID de forma prática.
-
-Essas abordagens tornam o código:
-
-🔹 Mais fácil de manter
-
-🔹 Mais testável
-
-🔹 Mais reutilizável
-
-🔹 E preparado para crescer com o tempo
